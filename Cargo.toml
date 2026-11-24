@@ -1,0 +1,12 @@
+[package]
+name = "bare-kit"
+version = "0.0.0"
+edition = "2024"
+description = "Rust bindings for Bare Kit"
+license = "Apache-2.0"
+repository = "https://github.com/holepunchto/bare-kit-rust"
+links = "bare_kit"
+include = ["/build.rs", "/src/**/*.rs", "/LICENSE", "/NOTICE", "/README.md"]
+
+[build-dependencies]
+sha2 = "0.11"

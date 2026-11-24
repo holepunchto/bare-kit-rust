@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "name": "bare-kit-rust",
+  "devDependencies": {
+    "bare-os": "^3.9.3",
+    "cmake-bare": "^1.17.0",
+    "cmake-fetch": "^1.5.5",
+    "prettier": "^3.9.10",
+    "prettier-config-holepunch": "^2.0.0"
+  }
+}
