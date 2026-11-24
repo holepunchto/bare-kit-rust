@@ -70,7 +70,7 @@ jobs:
         with:
           paths: prebuilds/${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.tags }}
           format: tar.gz
-      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+      - uses: holepunchto/actions/upload-artifact@v1
         with:
           name: ${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.tags }}
           path: ${{ steps.archive.outputs.path }}
