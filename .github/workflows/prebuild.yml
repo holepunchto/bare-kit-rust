@@ -12,22 +12,22 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-26.04
+          - os: ubuntu-22.04
             platform: linux
             arch: x64
-          - os: ubuntu-26.04-arm
+          - os: ubuntu-22.04-arm
             platform: linux
             arch: arm64
-          - os: ubuntu-26.04
+          - os: ubuntu-24.04
             platform: android
             arch: arm64
-          - os: ubuntu-26.04
+          - os: ubuntu-24.04
             platform: android
             arch: arm
-          - os: ubuntu-26.04
+          - os: ubuntu-24.04
             platform: android
             arch: x64
-          - os: ubuntu-26.04
+          - os: ubuntu-24.04
             platform: android
             arch: ia32
           - os: macos-15
