@@ -57,7 +57,7 @@ fn main() {
         println!("cargo:rustc-link-lib=static=bare_kit");
     }
 
-    if os == "windows" || os == "linux" {
+    if matches!(os.as_str(), "windows" | "linux" | "android") {
         for library in fs::read_to_string(dir.join("bare_kit.libs"))
             .unwrap()
             .lines()
@@ -84,10 +84,6 @@ fn main() {
                 dynamic_list.display()
             );
             println!("cargo:dynamic_list={}", dynamic_list.display());
-        }
-        "android" => {
-            println!("cargo:rustc-link-lib=android");
-            println!("cargo:rustc-link-lib=log");
         }
         _ => {}
     }

@@ -43,7 +43,7 @@ if(WIN32)
     "${CMAKE_COMMAND}"
     "-DAR=${CMAKE_AR}"
     "-DOUTPUT_DIR=${CMAKE_CURRENT_BINARY_DIR}"
-    -P "${CMAKE_CURRENT_LIST_DIR}/cmake/linker-win32.cmake"
+    -P "${CMAKE_CURRENT_LIST_DIR}/cmake/linker-coff.cmake"
     --
   )
 
@@ -82,11 +82,11 @@ else()
       -nostdlib
   )
 
-  if(LINUX)
+  if(LINUX OR ANDROID)
     set(launcher
       "${CMAKE_COMMAND}"
       "-DOUTPUT_DIR=${CMAKE_CURRENT_BINARY_DIR}"
-      -P "${CMAKE_CURRENT_LIST_DIR}/cmake/linker-linux.cmake"
+      -P "${CMAKE_CURRENT_LIST_DIR}/cmake/linker-elf.cmake"
       --
     )
 
@@ -97,16 +97,15 @@ else()
       CXX_LINKER_LAUNCHER "${launcher}"
     )
 
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bare_kit.libs" DESTINATION ${target})
+  endif()
+
+  if(LINUX)
     set(dynamic_list "${CMAKE_CURRENT_BINARY_DIR}/bare_kit.dynamic")
 
     file(GENERATE OUTPUT "${dynamic_list}" CONTENT "{\n  $<JOIN:${symbols},;\n  >;\n};\n")
 
-    install(
-      FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/bare_kit.libs"
-        "${dynamic_list}"
-      DESTINATION ${target}
-    )
+    install(FILES "${dynamic_list}" DESTINATION ${target})
   endif()
 
   set(archive "${CMAKE_CURRENT_BINARY_DIR}/libbare_kit.a")
