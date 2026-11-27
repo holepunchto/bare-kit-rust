@@ -5,7 +5,7 @@ find_package(cmake-fetch REQUIRED PATHS node_modules/cmake-fetch)
 
 project(bare_kit_rust C)
 
-fetch_package("github:holepunchto/bare-kit@3.2.1")
+fetch_package("github:holepunchto/bare-kit@3.4.0")
 
 bare_target(target)
 
