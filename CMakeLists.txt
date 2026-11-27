@@ -41,7 +41,7 @@ if(WIN32)
     "${CMAKE_COMMAND}"
     "-DAR=${CMAKE_AR}"
     "-DOUTPUT_DIR=${CMAKE_CURRENT_BINARY_DIR}"
-    -P "${CMAKE_CURRENT_LIST_DIR}/cmake/archive.cmake"
+    -P "${CMAKE_CURRENT_LIST_DIR}/cmake/linker-win32.cmake"
     --
   )
 
@@ -79,6 +79,24 @@ else()
       -r
       -nostdlib
   )
+
+  if(LINUX)
+    set(launcher
+      "${CMAKE_COMMAND}"
+      "-DOUTPUT_DIR=${CMAKE_CURRENT_BINARY_DIR}"
+      -P "${CMAKE_CURRENT_LIST_DIR}/cmake/linker-linux.cmake"
+      --
+    )
+
+    set_target_properties(
+      bare_kit_prelink
+      PROPERTIES
+      C_LINKER_LAUNCHER "${launcher}"
+      CXX_LINKER_LAUNCHER "${launcher}"
+    )
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bare_kit.libs" DESTINATION ${target})
+  endif()
 
   set(archive "${CMAKE_CURRENT_BINARY_DIR}/libbare_kit.a")
 

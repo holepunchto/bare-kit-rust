@@ -53,15 +53,17 @@ fn main() {
     if os == "windows" {
         println!("cargo:rustc-link-lib=static:+whole-archive=bare_kit");
         println!("cargo:rustc-link-lib=static=bare_kit_deps");
+    } else {
+        println!("cargo:rustc-link-lib=static=bare_kit");
+    }
 
+    if os == "windows" || os == "linux" {
         for library in fs::read_to_string(dir.join("bare_kit.libs"))
             .unwrap()
             .lines()
         {
             println!("cargo:rustc-link-lib={library}");
         }
-    } else {
-        println!("cargo:rustc-link-lib=static=bare_kit");
     }
 
     match os.as_str() {
@@ -71,9 +73,6 @@ fn main() {
         "ios" => {
             println!("cargo:rustc-link-lib=framework=CoreFoundation");
             println!("cargo:rustc-link-lib=framework=UIKit");
-        }
-        "linux" => {
-            println!("cargo:rustc-link-lib=dl");
         }
         "android" => {
             println!("cargo:rustc-link-lib=android");
