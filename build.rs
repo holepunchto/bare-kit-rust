@@ -74,6 +74,17 @@ fn main() {
             println!("cargo:rustc-link-lib=framework=CoreFoundation");
             println!("cargo:rustc-link-lib=framework=UIKit");
         }
+        "linux" => {
+            // Link arguments only reach the targets of this package, so the
+            // dynamic list is also passed on for applications to link with.
+            let dynamic_list = dir.join("bare_kit.dynamic");
+
+            println!(
+                "cargo:rustc-link-arg=-Wl,--dynamic-list={}",
+                dynamic_list.display()
+            );
+            println!("cargo:dynamic_list={}", dynamic_list.display());
+        }
         "android" => {
             println!("cargo:rustc-link-lib=android");
             println!("cargo:rustc-link-lib=log");

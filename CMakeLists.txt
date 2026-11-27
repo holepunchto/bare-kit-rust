@@ -9,12 +9,14 @@ fetch_package("github:holepunchto/bare-kit@3.4.0")
 
 bare_target(target)
 
+set(symbols "$<TARGET_PROPERTY:bare_kit::exports,INTERFACE_EXPORTED_SYMBOLS>")
+
 # Executables only export what the linker is told to, so on Windows the exports
 # of Bare and Bare Kit are embedded as linker directives in an object of their
-# own. Elsewhere, the object is empty and the exports come from the link.
+# own. Elsewhere, the object is empty and the exports come from the link, which
+# on Linux must be given them as a dynamic list.
 if(WIN32)
-  set(exports "$<TARGET_PROPERTY:bare_kit::exports,INTERFACE_EXPORTED_SYMBOLS>")
-  set(exports "$<LIST:TRANSFORM,${exports},PREPEND,#pragma comment(linker$<COMMA> \"/export:>")
+  set(exports "$<LIST:TRANSFORM,${symbols},PREPEND,#pragma comment(linker$<COMMA> \"/export:>")
   set(exports "$<LIST:TRANSFORM,${exports},APPEND,\")>")
   set(exports "$<JOIN:${exports},\n>")
 else()
@@ -95,7 +97,16 @@ else()
       CXX_LINKER_LAUNCHER "${launcher}"
     )
 
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bare_kit.libs" DESTINATION ${target})
+    set(dynamic_list "${CMAKE_CURRENT_BINARY_DIR}/bare_kit.dynamic")
+
+    file(GENERATE OUTPUT "${dynamic_list}" CONTENT "{\n  $<JOIN:${symbols},;\n  >;\n};\n")
+
+    install(
+      FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/bare_kit.libs"
+        "${dynamic_list}"
+      DESTINATION ${target}
+    )
   endif()
 
   set(archive "${CMAKE_CURRENT_BINARY_DIR}/libbare_kit.a")

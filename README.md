@@ -44,6 +44,16 @@ These bindings are a thin layer over [Bare Kit](https://github.com/holepunchto/b
 
 The crate supports Android, iOS, Linux, macOS, and Windows, and links Bare Kit statically. Its build script downloads the Bare Kit prebuild for the target from the release of the crate version. To use prebuilds of your own, set `BARE_KIT_DIR` to a directory of them, or `BARE_KIT_MIRROR` to a URL serving `v<version>/<target>.tar.gz`. A relative filename names a resource of the application. On Android, the Java virtual machine and application context are passed with `Builder::android()`.
 
+On Linux, an executable only exports the symbols that its link names, so the application must export those of Bare for native addons to resolve them. The crate provides them as a dynamic list, which the build script of the application passes to the link:
+
+```rust
+fn main() {
+    if let Ok(dynamic_list) = std::env::var("DEP_BARE_KIT_DYNAMIC_LIST") {
+        println!("cargo:rustc-link-arg=-Wl,--dynamic-list={dynamic_list}");
+    }
+}
+```
+
 Bare Kit links the static C runtime on Windows, so the application must too. Enable it in `.cargo/config.toml`:
 
 ```toml
