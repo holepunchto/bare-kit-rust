@@ -7,7 +7,60 @@ use sha2::{Digest, Sha256};
 
 // The SHA-256 checksums of the prebuilds attached to the release of this
 // version, which the publish workflow checks before releasing them.
-const CHECKSUMS: &[(&str, &str)] = &[];
+const CHECKSUMS: &[(&str, &str)] = &[
+    (
+        "android-arm",
+        "5b3d21177d72d53e1099e6ce4fe89a736fd2899558aaf436c62c8581976b8f5f",
+    ),
+    (
+        "android-arm64",
+        "3af45055ecf78c9f2cd6326727c7666939718f99ca5a950c23990260bf57f014",
+    ),
+    (
+        "android-ia32",
+        "7bb4f2533843b2bc7a4ba009f7c91c35f8dfda00a9e912dd7bdb13d8363614c6",
+    ),
+    (
+        "android-x64",
+        "b57f7cce282b41f4c6e8dd837f30a7e06103d03257b1b6ef0fc59d7d94499358",
+    ),
+    (
+        "darwin-arm64",
+        "0e47c8b5004f3968295ae13c480d80f7723e68ee2cbcbfac1b171687c44d840c",
+    ),
+    (
+        "darwin-x64",
+        "a6ace600d2c8cfaef8c0f5f2eee22684c10688deee8d29a5be15dfe84c37d6e1",
+    ),
+    (
+        "ios-arm64",
+        "60d4133eda1495ebad348f6769c48485388faabbfeb64aa1d41de3058285045b",
+    ),
+    (
+        "ios-arm64-simulator",
+        "45f27a02419e4655423a1d8e667205cbcd49e9153cd4ddad8db1ba5f8c739c03",
+    ),
+    (
+        "ios-x64-simulator",
+        "1fc93b07ea2e4658b093fc6db445d59d377308302683e96dee622d53b3c585a6",
+    ),
+    (
+        "linux-arm64",
+        "a81f384e639c719c1168011cc2e34b4e8a4ceca63d11d7163080a2ee95b61250",
+    ),
+    (
+        "linux-x64",
+        "b13b7e36344ac8d9c7acb2e465bb9e44ff7ad585dee1833f15eb6ba18616ae5b",
+    ),
+    (
+        "win32-arm64",
+        "5e25a962c42c28fbe82e740a1bd638e6615e165cff1ce49d755a18f581960172",
+    ),
+    (
+        "win32-x64",
+        "3b356c3f2c514ca2200295cc420eaefe0e09ecd79758279d5f8841400391f058",
+    ),
+];
 
 fn main() {
     println!("cargo:rerun-if-env-changed=BARE_KIT_DIR");
